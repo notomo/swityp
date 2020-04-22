@@ -41,7 +41,7 @@ func run(pass *analysis.Pass) (interface{}, error) {
 
 			for _, spec := range t.Specs {
 				vspec, ok := spec.(*ast.ValueSpec)
-				if !ok {
+				if !ok || len(vspec.Values) == 0 {
 					continue
 				}
 

@@ -8,6 +8,10 @@ test:
 clean:
 	go mod tidy
 
+install:
+	GO111MODULE=on go install ./cmd/swityp
+
 .PHONY: build
 .PHONY: test
 .PHONY: clean
+.PHONY: install
