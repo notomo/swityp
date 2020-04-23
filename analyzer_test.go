@@ -9,21 +9,24 @@ import (
 
 func TestAnalyzer(t *testing.T) {
 	tests := []struct {
-		name   string
-		target string
+		pkgPattern string
+		target     string
 	}{
 		{
-			name:   "simple",
-			target: "simple.NewType",
+			pkgPattern: "simple",
+			target:     "simple.NewType",
 		},
 	}
 
-	data := analysistest.TestData()
+	dir := analysistest.TestData()
 	for _, test := range tests {
-		t.Run(test.name, func(t *testing.T) {
+		t.Run(test.pkgPattern, func(t *testing.T) {
 			analyzer := swityp.Analyzer
 			analyzer.Flags.Set("target", test.target)
-			analysistest.Run(t, data, analyzer, test.name)
+			analyzer.Flags.Set("env", "GOPATH="+dir)
+			analyzer.Flags.Set("env", "GO111MODULE=off")
+
+			analysistest.Run(t, dir, analyzer, test.pkgPattern)
 		})
 	}
 }
